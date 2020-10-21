@@ -10,13 +10,18 @@ body {
     font-style: normal;
     font-size: 14px;
     line-height: 22px;
+    background: #E5E5E5;
 }
+
+/* HEADER */
 
 .header {
     background: #FA8C16;
     color: #fff;
     padding-top: 16px;
     padding-bottom: 16px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 30px;
 }
 
 .wrapper {
@@ -81,3 +86,128 @@ body {
 .search-input::-ms-input-placeholder { color: #BFBFBF; }
 .search-input::placeholder { color: #BFBFBF; }
 
+/* CONTENT */
+
+.content {
+    max-width: 1200px;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.posts {
+    max-width: 800px;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #E8E8E8;
+    margin-bottom: 30px;
+}
+
+.post-body {
+    padding-top: 35px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.post-title {
+    margin-bottom: 19px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #262626;
+}
+
+.post-text {
+    color: #262626;
+    margin-top: 20px;
+}
+
+.post-texts:first-child {
+    margin-top: 0;
+}
+
+.tags {
+    margin-bottom: 22px;
+    margin-top: 12px;
+}
+
+.tag {
+    color: #BFBFBF;
+    margin-right: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #E8E8E8;
+    background: #FAFAFA;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+}
+
+.post-footer svg.icon {
+    fill: #8C8C8C;
+}
+
+.post-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.post-btn {
+    background: transparent;
+    border:0;
+    color: #8C8C8C;
+    display: flex;
+    align-items: center;
+    margin-right: 19px;
+    cursor: pointer;
+}
+
+.post-authors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author-about {
+    text-align: right;
+}
+
+.author-username {
+    display: block;
+}
+
+.author-avatar {
+    width: 34px;
+    height: 34px;
+    margin-left: 9px;
+    border-radius: 4px;
+}
+
+.author-username {
+    font-size: 12px;
+    line-height: 20px;
+    color: #8C8C8C;
+    text-decoration: none;
+}
+
+.post-time {
+    font-size: 12px;
+    line-height: 20px;
+    color: #BFBFBF;
+}
+
+.icon-like, .icon-comments {
+    margin-right: 6px;
+}
+
+/* SIDEBAR */
