@@ -59,7 +59,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 5px 10px 5px 12px;
-    width: 237px;
+    max-width: 237px;
+    width: 60%;
     height: 32px;
 }
 
@@ -85,6 +86,10 @@ body {
 .search-input:-ms-input-placeholder { color: #BFBFBF; }
 .search-input::-ms-input-placeholder { color: #BFBFBF; }
 .search-input::placeholder { color: #BFBFBF; }
+
+.menu-toggle {
+    display: none;
+}
 
 /* CONTENT */
 
