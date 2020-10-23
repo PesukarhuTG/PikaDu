@@ -1,6 +1,9 @@
 # Description
 
-Website with blog like "Pikabu".
+Website with blog like "Pikabu".<br>
+• Based on design layout in Figma<br>
+• Create media quares<br>
+• Create burger menu<br>
 
 Preview by link ► https://pesukarhutg.github.io/PikaDu/
 
