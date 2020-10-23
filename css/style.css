@@ -391,6 +391,41 @@ h2.card-title {
     margin-bottom: 16px;
 }
 
+.add-title::-moz-placeholder {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+}
+
+.add-title::-webkit-input-placeholder {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+}
+
+.add-title:-ms-input-placeholder {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+}
+
+.add-title::-ms-input-placeholder {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+}
+
+.add-title::placeholder {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+}
+
 .add-text {
     min-height: 362px;
     background: #FFF;
@@ -398,6 +433,12 @@ h2.card-title {
     padding: 23px 30px;
     margin-bottom: 16px;
 }
+
+.add-text::-moz-placeholder { color: #595959; }
+.add-text::-webkit-input-placeholder { color: #595959; }
+.add-text:-ms-input-placeholder { color: #595959; }
+.add-text::-ms-input-placeholder { color: #595959; }
+.add-text::placeholder { color: #595959; }
 
 .add-button {
     max-width: 370px;
