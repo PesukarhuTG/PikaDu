@@ -28,7 +28,6 @@
 
     .content {
         margin-top: 94px;
-        margin-bottom: 50px;
     }
 
     .sidebar {
@@ -67,7 +66,26 @@
 
 }
 
+ @media (max-width: 600px) {
+
+    .add-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .add-button {
+        max-width: 100%;
+    }
+
+    .button-outline {
+        margin-right: 0;
+        margin-top: 15px;
+    }
+
+}
+
 @media (max-width: 480px) {
+
     .search-input {
         width: 60%;
     }
@@ -93,6 +111,7 @@
 }
 
 @media (max-width: 300px) {
+
     .input-group {
         display: none;
     }

@@ -104,6 +104,7 @@ body {
 
 .posts {
     max-width: 67%;
+    width: 100%;
 }
 
 .post {
@@ -298,6 +299,8 @@ body {
     text-decoration: none;
     border-radius: 4px;
     text-align: center;
+    border: 0;
+    cursor: pointer;
 }
 
 .button-new-post {
@@ -311,7 +314,7 @@ body {
 .icon-fire {
     fill: #fff;
     width: 16px;
-    height: 16px;
+    height: 12px;
 }
 
 .card {
@@ -372,4 +375,48 @@ h2.card-title {
     font-size: 12px;
     line-height: 20px;
     color: #FFFFFF;
+}
+
+/* POST PAGE */
+
+.add-post {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-title {
+    background: #FFF;
+    border: 1px solid #E8E8E8;
+    padding: 23px 30px;
+    margin-bottom: 16px;
+}
+
+.add-text {
+    min-height: 362px;
+    background: #FFF;
+    border: 1px solid #E8E8E8;
+    padding: 23px 30px;
+    margin-bottom: 16px;
+}
+
+.add-button {
+    max-width: 370px;
+    width: 100%;
+    margin-right: 2%;
+}
+
+.button-outline {
+    background: #fff;
+    border: 1px solid #ffc53d;
+    border-radius: 4px;
+    color: #FFC53D;
+    padding: 13px 16px;
+    margin-right: 1%;
+    cursor: pointer;
+}
+
+.icon-video, .icon-photo {
+    fill: #FFC53D;
+    width: 14px;
+    height: 12px;
 }
