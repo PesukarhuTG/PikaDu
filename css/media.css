@@ -1,20 +1,41 @@
 @media (max-width: 990px) {
 
-    .menu-toggle {
+    .menu {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 20px;
-        margin-left: 12px;
-        overflow: none;
+        flex-direction: row;
     }
 
-    .menu-toggle span {
-        height: 2px;
-        width: 100%;
-        background-color: #fff;
+    label {
+        display: flex;
+        flex-direction: row;
     }
+
+    .lines {
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    .lines [class^="line-"] { /*оформляем линии бургера*/
+        width: 40px;
+        height: 4px;
+        border-radius: 8px;
+        background-color: #fff;
+        margin: 10px 0;
+        transition: all 0.6s ease;
+    }
+    
+    #menu-active:checked ~ label .line-1 { /*при щелке на label*/
+        transform: translatey(14px) rotate(45deg); /*линия 1 изменяется*/
+    }
+    
+    #menu-active:checked ~ label .line-2 { /*при щелке на label*/
+        transform: scale(0); /*линия 2 прячется*/
+    }
+    
+    #menu-active:checked ~ label .line-3 { /*при щелке на label*/
+        transform: translatey(-14px) rotate(-45deg); /*линия 3 изменяется*/
+    }
+    
 
     .header {
         position: fixed;
@@ -33,7 +54,7 @@
     .sidebar {
         position: fixed;
         z-index: 101;
-        top: 64px;
+        top: 84px;
         right: 0;
         bottom: 0;
         height: calc(100% - 64px);

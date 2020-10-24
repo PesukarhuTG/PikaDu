@@ -87,7 +87,7 @@ body {
 .search-input::-ms-input-placeholder { color: #BFBFBF; }
 .search-input::placeholder { color: #BFBFBF; }
 
-.menu-toggle {
+input[type="checkbox"] { /*убираем стандартный*/
     display: none;
 }
 
