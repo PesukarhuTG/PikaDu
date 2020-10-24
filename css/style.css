@@ -432,6 +432,7 @@ h2.card-title {
     border: 1px solid #E8E8E8;
     padding: 23px 30px;
     margin-bottom: 16px;
+    resize: none;
 }
 
 .add-text::-moz-placeholder { color: #595959; }
