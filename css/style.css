@@ -65,20 +65,26 @@ body {
 }
 
 .search-input {
-    border: 0;
-    outline: none;
+    width: 80%;
     height: 100%;
+    border: 0;
+    font-size: 14px;
+    line-height: 22px;
+    padding-left: 12px;
 }
 
 .search-button {
-    border: 0;
-    background-color: transparent;
-    outline: none;
     height: 100%;
+    width: 20%;
+    border: 0;
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
 }
 
 .search-input::-moz-placeholder {color: #BFBFBF;}
@@ -227,6 +233,101 @@ input[type="checkbox"] { /*убираем стандартный*/
     width: 31%;
 }
 
+.login {
+    align-items: center;
+    justify-content: space-between;
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+    padding: 15px 25px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-title {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #595959;
+    line-height: 24px;
+}
+
+.login-input {
+    display: block;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.login-forget {
+    text-align: center;
+    font-size: 12px;
+    text-decoration: none;
+    color: #757575;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.login-signin {
+    background: #FAAD14;
+    border: 0;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    text-transform: uppercase;
+    line-height: 32px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    margin-bottom: 15px;
+    outline: none;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+}
+
+.login-signin:hover {
+    background-color: #fa8614;
+}
+
+.login-signin:active {
+    filter: brightness(85%);
+    -webkit-filter: brightness(85%);
+}
+
+.login-signup {
+    border: 0;
+    background: #E5E5E5;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    text-transform: uppercase;
+    line-height: 32px;
+    cursor: pointer;
+    color: #757575;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+}
+
+.login-signup:hover {
+    background-color: #afaeae;
+    color: #fff;
+}
+
 .user-info {
     display: flex;
     flex-direction: row;
@@ -264,6 +365,7 @@ input[type="checkbox"] { /*убираем стандартный*/
 }
 
 .sidebar-nav {
+    display: none;
     background: #fff;
 }
 
@@ -304,11 +406,13 @@ input[type="checkbox"] { /*убираем стандартный*/
 }
 
 .button-new-post {
-    display: block;
+    /* display: block; */
+    display: none;
     width: 100%;
     font-size: 16px;
     line-height: 24px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .icon-fire {
@@ -320,7 +424,6 @@ input[type="checkbox"] { /*убираем стандартный*/
 .card {
     background: #fff;
     border: 1px solid #e8e8e8;
-    margin-top: 20px;
 }
 
 .card-header {

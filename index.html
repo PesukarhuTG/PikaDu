@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,9 @@
 <body>
     <header class="header">
         <div class="wrapper">
-            <a href="index.html" class="header-logo"><img src="img/Pikadu.svg" alt="logo"></a>
+            <a href="index.html" class="header-logo">
+                <img class="header-logo-image" src="img/Pikadu.svg" alt="logo">
+            </a>
             <nav class="header-nav">
                 <ul class="header-menu">
                     <li class="header-menu-item"><a class="header-menu-link" href="#">Свежее</a></li>
@@ -25,7 +27,7 @@
             <div class="input-group search">
                 <input type="search" class="search-input" placeholder="Поиск по сайту">
                 <button class="search-button">
-                    <img src="img/search.svg" alt="search-icon">
+                    <img class="search-icon"src="img/search.svg" alt="search-icon">
                 </button>
             </div>
             <div class="menu">
@@ -225,6 +227,26 @@
 
         </main>
         <aside class="sidebar">
+            <div class="login">
+                <form class="login-form">
+                    <h2 class="login-title">Авторизация</h2>
+                    <input type="email" class="login-input login-email"
+                        name="email"
+                        minlength="3"
+                        required
+                        placeholder="Введите email">
+
+                    <input type="password" class="login-input login-password"
+                        name="password"
+                        minlength="3"
+                        required
+                        placeholder="Введите пароль">
+
+                    <a href="#" class="login-forget">Забыли пароль?</a>
+                    <button class="login-signin" type="submit">Войти</button>
+                    <button class="login-signup" type="submit">Регистрация</button>
+                </form>
+            </div>
             <div class="user">
                 <a href="#" class="user-info">
                     <div class="user-avatar">
