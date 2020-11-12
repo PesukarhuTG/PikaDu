@@ -2,11 +2,6 @@
 const close = document.querySelector('.menu-active');
 const menu = document.querySelector('.sidebar');
 
-close.addEventListener('click', (e) => {
-    menu.classList.toggle('visible');
-});
-
-
 const regExpValidEmail = /^\w+@\w+\.\w{2,}$/;
 
 const loginElem = document.querySelector('.login');
@@ -24,6 +19,8 @@ const editElem = document.querySelector('.edit');
 const editUsername = document.querySelector('.edit-username');
 const editPhotoURL = document.querySelector('.edit-photo');
 const userAvatarElem = document.querySelector('.user-avatar');
+
+const postsWrapper = document.querySelector('.posts');
 
 
 const listUsers = [
@@ -114,6 +111,43 @@ const setUsers = {
     }
 }; 
 
+const setPosts = {
+    allPosts: [
+        {
+            title: 'Истоки лидерства',
+            text: 'Придерживаясь жестких принципов социального Дарвинизма, предсознательное зеркально отталкивает гештальт. Чувство вызывает социометрический гештальт.',
+            tags: ['свежее', 'социум', 'психология', 'личностныйрост', 'гештальт'],
+            author: 'tany@mail.ru',
+            data: '11.11.2020, 20:54:00',
+            likes: 15,
+            comments: 20,
+        },
+
+        {
+            title: 'Маркетинг в наши дни',
+            text: 'Агентская комиссия позиционирует эмпирический комплексный анализ ситуации, не считаясь с затратами. Спонсорство поддерживает бренд. Продукт, как принято считать, стабилизирует целевой трафик. Продуктовый ассортимент концентрирует культурный SWOT-анализ.',
+            tags: ['маркетинг', 'анализ', 'развитие', 'promotion'],
+            author: 'max@mail.ru',
+            data: '07.11.2020, 15:20:00',
+            likes: 47,
+            comments: 5,
+        },
+
+        {
+            title: 'Жидкофазный катионит — актуальная национальная задача',
+            text: 'Гибридизация, в согласии с традиционными представлениями, различна. Комплекс рения с саленом, в первом приближении, ковалентно выпадает сернистый газ. Диэтиловый эфир представляет собой полимерный белок.',
+            tags: ['химия', 'анализ', 'молекула', 'белок', 'трансформация'],
+            author: 'nick@mail.ru',
+            data: '17.06.2020, 18:53:00',
+            likes: 17,
+            comments: 2,
+        }
+
+    ],
+
+
+};
+
 //open login window after authorzation
 const toggleAuthDom = () => {
     const user = setUsers.user;
@@ -128,42 +162,114 @@ const toggleAuthDom = () => {
         loginElem.style.display = '';
         userElem.style.display = 'none';
     }
-
 };
 
+//show all posts
+const showAllPosts = () => {
+
+    let postsHTML = '';
+
+    setPosts.allPosts.forEach( post => {
+        postsHTML += `
+                <section class="post">
+                <div class="post-body">
+                    <h2 class="post-title">${post.title}</h2>
+                    <div class="post-texts">
+                        <p class="post-text">${post.text}
+                        </p>
+                    </div>
+                    <div class="tags">
+                        <a href="#" class="tag">${post.tags}</a>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <div class="post-buttons">
+                        <button class="likes post-btn">
+                            <svg width="26" height="24" class="icon icon-like">
+                                <use xlink:href="img/icons.svg#like"></use>
+                            </svg>
+                            <span class="likes-counter">${post.likes}</span>
+                        </button>
+                        <button class="comments post-btn">
+                            <svg width="26" height="24" class="icon icon-comments">
+                                <use xlink:href="img/icons.svg#comment"></use>
+                            </svg>
+                            <span class="comments-counter">${post.comments}</span>
+                        </button>
+                        <button class="save post-btn">
+                            <svg width="24" height="24" class="icon icon-save">
+                                <use xlink:href="img/icons.svg#save"></use>
+                            </svg>
+                        </button>
+                        <button class="share post-btn">
+                            <svg width="24" height="24" class="icon icon-share">
+                                <use xlink:href="img/icons.svg#share"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="post-authors">
+                        <div class="author-about">
+                            <a href="#" class="author-username">${post.author}</a>
+                            <span class="post-time">${post.data}</span>
+                        </div>
+                        <a href="#" class="author-link">
+                            <img class="author-avatar" src="img/person.jpg" alt="avatar">
+                        </a>
+                    </div>
+                </div>
+            </section>
+        `;
+    });
+
+    postsWrapper.innerHTML = postsHTML;
+}
+
+
+//for init all main functions and events
+const init = () => {
+
+    close.addEventListener('click', (e) => {
+        menu.classList.toggle('visible');
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        setUsers.logIn(emailInput.value, passwordInput.value, toggleAuthDom);
+        loginForm.reset();
+    });
+    
+    loginSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        setUsers.signUp(emailInput.value, passwordInput.value, toggleAuthDom);
+        loginForm.reset();
+    });
+    
+    exitElem.addEventListener('click', (e) => {
+        e.preventDefault();
+        setUsers.logOut(toggleAuthDom);
+    });
+    
+    editElem.addEventListener('click', (e) => {
+        e.preventDefault();
+        editContainer.classList.toggle('visible');
+        editUsername.value = setUsers.user.displayName;
+    });
+    
+    editContainer.addEventListener('submit', (e) => {
+        e.preventDefault();
+        setUsers.editUser(editUsername.value, editPhotoURL.value, toggleAuthDom);
+        editContainer.classList.remove('visible')
+    
+    });
+    
+    showAllPosts();
+    toggleAuthDom();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+})
 
 
 
 
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    setUsers.logIn(emailInput.value, passwordInput.value, toggleAuthDom);
-    loginForm.reset();
-});
-
-loginSignup.addEventListener('click', (e) => {
-    e.preventDefault();
-    setUsers.signUp(emailInput.value, passwordInput.value, toggleAuthDom);
-    loginForm.reset();
-});
-
-exitElem.addEventListener('click', (e) => {
-    e.preventDefault();
-    setUsers.logOut(toggleAuthDom);
-});
-
-editElem.addEventListener('click', (e) => {
-    e.preventDefault();
-    editContainer.classList.toggle('visible');
-    editUsername.value = setUsers.user.displayName;
-});
-
-editContainer.addEventListener('submit', (e) => {
-    e.preventDefault();
-    setUsers.editUser(editUsername.value, editPhotoURL.value, toggleAuthDom);
-    editContainer.classList.remove('visible')
-
-});
-
-
-toggleAuthDom();
