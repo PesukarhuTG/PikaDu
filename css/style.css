@@ -328,26 +328,31 @@ input[type="checkbox"] { /*убираем стандартный*/
     color: #fff;
 }
 
+.user {
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+    padding: 15px 25px;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .user-info {
     display: flex;
     flex-direction: row;
     align-items: center;
     text-decoration: none;
     line-height: 0;
-}
-
-.user {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fafafa;
-    border: 1px solid #e8e8e8;
-    padding: 15px 25px;
+    margin-right: auto;
 }
 
 .user-avatar {
     border-radius: 50%;
     margin-right: 17px;
+    object-fit: cover;
 }
 
 .user-name {
@@ -357,11 +362,77 @@ input[type="checkbox"] { /*убираем стандартный*/
     color: #595959;
 }
 
+.edit {
+    margin-right: 15px;
+}
+
+.edit-container {
+    display: none;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+
+.edit-container.visible{
+   display: block;
+}
+
+.edit-title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #595959;
+}
+
+.edit-label {
+    display: block;
+    padding: 5px 0;
+}
+
+.edit-input {
+    display: block;
+    padding: 5px 10px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.icon-edit {
+    fill: #595959;
+    width: 20px;
+    height: 20px;
+}
+
+.edit-btn {
+    display: block;
+    width: 100%;
+    background: #FAAD14;
+    border: 0;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    text-transform: uppercase;
+    line-height: 32px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+}
+
+.edit-btn:hover {
+    background-color: #fa8614;
+}
+
 .icon-exit {
     fill: #000;
     width: 20px;
     height: 20px;
-    line-height: 0;
 }
 
 .sidebar-nav {
