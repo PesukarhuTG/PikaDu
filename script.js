@@ -1,3 +1,21 @@
+// FIREBASE begin
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBNBskyv2s_BuXv6afCvoWqvsAy0mYS59g",
+    authDomain: "project-pikadu.firebaseapp.com",
+    databaseURL: "https://project-pikadu.firebaseio.com",
+    projectId: "project-pikadu",
+    storageBucket: "project-pikadu.appspot.com",
+    messagingSenderId: "519217518119",
+    appId: "1:519217518119:web:f2a2bb3ef9f7868a0ca002"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+console.log(firebase);
+
+// FIREBASE end
+
 const close = document.querySelector('.menu-active');
 const menu = document.querySelector('.sidebar');
 const regExpValidEmail = /^\w+@\w+\.\w{2,}$/;
@@ -189,7 +207,6 @@ const setPosts = {
 //open login window after authorzation
 const toggleAuthDom = () => {
     const user = setUsers.user;
-    console.log('user ', user);
 
     if (user) {
         loginElem.style.display = 'none';
@@ -342,7 +359,11 @@ const init = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     init();
-})
+});
+
+
+
+
 
 
 
