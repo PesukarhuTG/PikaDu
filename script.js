@@ -1,43 +1,43 @@
-//CLOSE/OPEN SIDEBAR WITH BURGERMENU
 const close = document.querySelector('.menu-active');
 const menu = document.querySelector('.sidebar');
-
 const regExpValidEmail = /^\w+@\w+\.\w{2,}$/;
-
 const loginElem = document.querySelector('.login');
 const loginForm = document.querySelector('.login-form');
 const emailInput = document.querySelector('.login-email');
 const passwordInput = document.querySelector('.login-password');
 const loginSignup = document.querySelector('.login-signup');
-
 const userElem = document.querySelector('.user');
 const userNameElem = document.querySelector('.user-name');
-
 const exitElem = document.querySelector('.exit');
 const editContainer = document.querySelector('.edit-container');
 const editElem = document.querySelector('.edit');
 const editUsername = document.querySelector('.edit-username');
 const editPhotoURL = document.querySelector('.edit-photo');
 const userAvatarElem = document.querySelector('.user-avatar');
-
 const postsWrapper = document.querySelector('.posts');
+
+const btnNewPost = document.querySelector('.button-new-post');
+const addPostElem = document.querySelector('.add-post');
 
 
 const listUsers = [
     {
         email: 'tany@mail.ru',
         password: '12345',
-        displayName: 'TanyJunior'
+        displayName: 'TanyJunior',
+        photo: 'https://ladyblogger.net/wp-content/uploads/2020/02/woman-standing-on-road-1758144.jpg'
     },
     {
         email: 'max@mail.ru',
         password: '12345',
-        displayName: 'MaxJunior'
+        displayName: 'MaxMiddle',
+        photo: 'https://www.baldingbeards.com/wp-content/uploads/2020/04/ways-to-grow-a-thicker-beard.jpg'
     },
     {
         email: 'nick@mail.ru',
         password: '12345',
-        displayName: 'NickJunior'
+        displayName: 'NickSenior',
+        photo: 'https://i.pinimg.com/originals/ca/f1/fd/caf1fdc4ee811b1a47c0885d797bb31d.jpg'
     },
 
 ];
@@ -47,6 +47,11 @@ const setUsers = {
     user: null,
 
     logIn(email, password, handler) {
+
+        //if handler does not exist => without errors:
+        if (handler) {
+            handler();
+        }
 
         if(!regExpValidEmail.test(email)) {
             alert('Не валидный email')
@@ -70,6 +75,11 @@ const setUsers = {
 
     signUp(email, password, handler) {
 
+        //if handler does not exist => without errors:
+        if (handler) {
+            handler();
+        }
+
         if(!regExpValidEmail.test(email)) {
             alert('Не валидный email')
             return;
@@ -91,6 +101,12 @@ const setUsers = {
     },
 
     editUser(userName, userPhoto, handler) {
+
+        //if handler does not exist => without errors:
+        if (handler) {
+            handler();
+        }
+
         if (userName) {
             this.user.displayName = userName;
         }
@@ -117,7 +133,7 @@ const setPosts = {
             title: 'Истоки лидерства',
             text: 'Придерживаясь жестких принципов социального Дарвинизма, предсознательное зеркально отталкивает гештальт. Чувство вызывает социометрический гештальт.',
             tags: ['свежее', 'социум', 'психология', 'личностныйрост', 'гештальт'],
-            author: 'tany@mail.ru',
+            author: {displayName: 'Tany', photo: 'https://previews.123rf.com/images/sevalv/sevalv1706/sevalv170600287/80194193-close-up-of-beautiful-ginger-girl-touching-hair-smiling-showing-tongue-looking-at-camera-white-backg.jpg'},
             data: '11.11.2020, 20:54:00',
             likes: 15,
             comments: 20,
@@ -127,7 +143,7 @@ const setPosts = {
             title: 'Маркетинг в наши дни',
             text: 'Агентская комиссия позиционирует эмпирический комплексный анализ ситуации, не считаясь с затратами. Спонсорство поддерживает бренд. Продукт, как принято считать, стабилизирует целевой трафик. Продуктовый ассортимент концентрирует культурный SWOT-анализ.',
             tags: ['маркетинг', 'анализ', 'развитие', 'promotion'],
-            author: 'max@mail.ru',
+            author: {displayName: 'Maks', photo: 'https://www.baldingbeards.com/wp-content/uploads/2020/04/ways-to-grow-a-thicker-beard.jpg'},
             data: '07.11.2020, 15:20:00',
             likes: 47,
             comments: 5,
@@ -137,7 +153,7 @@ const setPosts = {
             title: 'Жидкофазный катионит — актуальная национальная задача',
             text: 'Гибридизация, в согласии с традиционными представлениями, различна. Комплекс рения с саленом, в первом приближении, ковалентно выпадает сернистый газ. Диэтиловый эфир представляет собой полимерный белок.',
             tags: ['химия', 'анализ', 'молекула', 'белок', 'трансформация'],
-            author: 'nick@mail.ru',
+            author: {displayName: 'Nick', photo: 'https://i.pinimg.com/originals/ca/f1/fd/caf1fdc4ee811b1a47c0885d797bb31d.jpg'},
             data: '17.06.2020, 18:53:00',
             likes: 17,
             comments: 2,
@@ -145,6 +161,28 @@ const setPosts = {
 
     ],
 
+    addPost(title, text, tags, handler) {
+
+        this.allPosts.unshift({
+            title,
+            text,
+            tags: tags.split(',').map(item => item.trim()),
+            author: {
+                displayName: setUsers.user.displayName,
+                photo: setUsers.user.photo,
+            },
+            data: new Date().toLocaleString(),
+            likes: 0,
+            comments: 0,
+        })
+
+        //if handler does not exist => without errors:
+        if (handler) {
+            handler();
+        }
+
+
+    }
 
 };
 
@@ -158,28 +196,40 @@ const toggleAuthDom = () => {
         userElem.style.display = '';
         userNameElem.textContent = user.displayName;
         userAvatarElem.src = user.photo || userAvatarElem.src;
+        btnNewPost.classList.add('visible');
     } else {
         loginElem.style.display = '';
         userElem.style.display = 'none';
+        btnNewPost.classList.remove('visible');
+        addPostElem.classList.remove('visible');
+        postsWrapper.classList.add('visible');
     }
+};
+
+const showAddPost = () => {
+    addPostElem.classList.add('visible');
+    postsWrapper.classList.remove('visible');
 };
 
 //show all posts
 const showAllPosts = () => {
 
+    addPostElem.classList.remove('visible');
+    postsWrapper.classList.add('visible');
+
     let postsHTML = '';
 
-    setPosts.allPosts.forEach( post => {
+    setPosts.allPosts.forEach( ({ title, text, data, tags, likes, comments, author }) => {
         postsHTML += `
                 <section class="post">
                 <div class="post-body">
-                    <h2 class="post-title">${post.title}</h2>
+                    <h2 class="post-title">${title}</h2>
                     <div class="post-texts">
-                        <p class="post-text">${post.text}
+                        <p class="post-text">${text}
                         </p>
                     </div>
                     <div class="tags">
-                        <a href="#" class="tag">${post.tags}</a>
+                        ${tags.map(tag => `<a href="#" class="tag">#${tag}</a>`)}
                     </div>
                 </div>
                 <div class="post-footer">
@@ -188,13 +238,13 @@ const showAllPosts = () => {
                             <svg width="26" height="24" class="icon icon-like">
                                 <use xlink:href="img/icons.svg#like"></use>
                             </svg>
-                            <span class="likes-counter">${post.likes}</span>
+                            <span class="likes-counter">${likes}</span>
                         </button>
                         <button class="comments post-btn">
                             <svg width="26" height="24" class="icon icon-comments">
                                 <use xlink:href="img/icons.svg#comment"></use>
                             </svg>
-                            <span class="comments-counter">${post.comments}</span>
+                            <span class="comments-counter">${comments}</span>
                         </button>
                         <button class="save post-btn">
                             <svg width="24" height="24" class="icon icon-save">
@@ -209,11 +259,11 @@ const showAllPosts = () => {
                     </div>
                     <div class="post-authors">
                         <div class="author-about">
-                            <a href="#" class="author-username">${post.author}</a>
-                            <span class="post-time">${post.data}</span>
+                            <a href="#" class="author-username">${author.displayName}</a>
+                            <span class="post-time">${data}</span>
                         </div>
                         <a href="#" class="author-link">
-                            <img class="author-avatar" src="img/person.jpg" alt="avatar">
+                            <img class="author-avatar" src=${author.photo || "img/person.jpg"} alt="avatar">
                         </a>
                     </div>
                 </div>
@@ -223,7 +273,6 @@ const showAllPosts = () => {
 
     postsWrapper.innerHTML = postsHTML;
 }
-
 
 //for init all main functions and events
 const init = () => {
@@ -260,6 +309,31 @@ const init = () => {
         setUsers.editUser(editUsername.value, editPhotoURL.value, toggleAuthDom);
         editContainer.classList.remove('visible')
     
+    });
+
+    btnNewPost.addEventListener('click', (e) => {
+        e.preventDefault();
+        showAddPost();
+    });
+
+    addPostElem.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const { title, text, tags } = addPostElem.elements;
+
+        if (title.value.length < 6) {
+            alert ('Слишком короткий заголовок');
+            return;
+        }
+
+        if (text.value.length < 50) {
+            alert ('Слишком короткий пост');
+            return;
+        }
+
+        setPosts.addPost(title.value, text.value, tags.value, showAllPosts);
+
+        addPostElem.classList.remove('visible');
+        addPostElem.reset();
     });
     
     showAllPosts();
