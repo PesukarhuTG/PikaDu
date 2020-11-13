@@ -12,7 +12,6 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-console.log(firebase);
 
 // FIREBASE end
 
@@ -37,32 +36,26 @@ const postsWrapper = document.querySelector('.posts');
 const btnNewPost = document.querySelector('.button-new-post');
 const addPostElem = document.querySelector('.add-post');
 
+const DEFAULT_PHOTO = userAvatarElem.src;
 
-const listUsers = [
-    {
-        email: 'tany@mail.ru',
-        password: '12345',
-        displayName: 'TanyJunior',
-        photo: 'https://ladyblogger.net/wp-content/uploads/2020/02/woman-standing-on-road-1758144.jpg'
-    },
-    {
-        email: 'max@mail.ru',
-        password: '12345',
-        displayName: 'MaxMiddle',
-        photo: 'https://www.baldingbeards.com/wp-content/uploads/2020/04/ways-to-grow-a-thicker-beard.jpg'
-    },
-    {
-        email: 'nick@mail.ru',
-        password: '12345',
-        displayName: 'NickSenior',
-        photo: 'https://i.pinimg.com/originals/ca/f1/fd/caf1fdc4ee811b1a47c0885d797bb31d.jpg'
-    },
-
-];
 
 //One big object with methods for work with the listUsers
 const setUsers = {
     user: null,
+
+    initUser(handler) {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.user = user;
+            } else {
+                this.user = null;
+            }
+            //if handler does not exist => without errors:
+            if (handler) {
+                handler();
+            }
+        })
+    },
 
     logIn(email, password, handler) {
 
@@ -76,19 +69,33 @@ const setUsers = {
             return;
         }
 
-        const user = this.getUser(email);
+        firebase.auth().signInWithEmailAndPassword(email, password)
+                .catch(err => {
+                    const errCode = err.code;
+                    const errMessage = err.message;
+                    if (errCode === 'auth/wrong-password') {
+                        console.log(errMessage);
+                        alert('Неверный пароль');
+                    } else if (errCode === 'auth/user-not-found') {
+                        console.log(errMessage);
+                        alert('Пользователь не найден');
+                    } else {
+                        alert(errMessage);
+                    }
+                });
 
-        if (user && user.password === password) {
-            this.authorizedUser(user); //authorization
-            handler(); //change blocks
-        } else {
-            alert('Пользователь с такими данными не найден');
-        }
+        // const user = this.getUser(email);
+
+        // if (user && user.password === password) {
+        //     this.authorizedUser(user); //authorization
+        //     handler(); //change blocks
+        // } else {
+        //     alert('Пользователь с такими данными не найден');
+        // }
     },
 
-    logOut(handler) {
-        this.user = null;
-        handler(); //change blocks
+    logOut() {
+        firebase.auth().signOut();
     },
 
     signUp(email, password, handler) {
@@ -108,100 +115,94 @@ const setUsers = {
             return;
         }
 
-        if (!this.getUser(email)) { 
-            const user = {email, password, displayName: email.split('@')[0]}
-            listUsers.push(user); //add new person
-            this.authorizedUser(user); //authorization
-            handler(); //change blocks
-        } else {
-            alert('Пользователь уже зарегистрирован');
+        firebase.auth()
+                .createUserWithEmailAndPassword(email, password) //return promise
+                .then((data) => {
+                    this.editUser(email.split('@')[0], null, handler);
+                })
+                .catch(err => {
+                    const errCode = err.code;
+                    const errMessage = err.message;
+                    if (errCode === 'auth/weak-password') {
+                        console.log(errMessage);
+                        alert('Слабый пароль');
+                    } else if (errCode === 'auth/email-already-in-use') {
+                        console.log(errMessage);
+                        alert('Пользователь с таким email уже существует');
+                    } else {
+                        alert(errMessage);
+                    }
+                });
+
+
+
+        // if (!this.getUser(email)) { 
+        //     const user = {email, password, displayName: email.split('@')[0]}
+        //     listUsers.push(user); //add new person
+        //     this.authorizedUser(user); //authorization
+        //     handler(); //change blocks
+        // } else {
+        //     alert('Пользователь уже зарегистрирован');
+        // }
+    },
+
+    editUser(displayName, photoURL, handler) {
+
+        const user = firebase.auth().currentUser;
+
+        if (displayName) {
+            if (photoURL) {
+                user.updateProfile({
+                    displayName,
+                    photoURL
+                }).then(handler)
+            } else {
+            user.updateProfile({
+                displayName
+            }).then(handler)
+            }
         }
     },
 
-    editUser(userName, userPhoto, handler) {
+    // getUser(email) {
+    //     return listUsers.find(item => item.email === email)
+    // },
 
-        //if handler does not exist => without errors:
-        if (handler) {
-            handler();
-        }
-
-        if (userName) {
-            this.user.displayName = userName;
-        }
-
-        if (userPhoto) {
-            this.user.photo = userPhoto;
-        }
-
-        handler();
-    },
-
-    getUser(email) {
-        return listUsers.find(item => item.email === email)
-    },
-
-    authorizedUser(user) {
-        this.user = user;
-    }
+    // authorizedUser(user) {
+    //     this.user = user;
+    // }
 }; 
 
 const setPosts = {
-    allPosts: [
-        {
-            title: 'Истоки лидерства',
-            text: 'Придерживаясь жестких принципов социального Дарвинизма, предсознательное зеркально отталкивает гештальт. Чувство вызывает социометрический гештальт.',
-            tags: ['свежее', 'социум', 'психология', 'личностныйрост', 'гештальт'],
-            author: {displayName: 'Tany', photo: 'https://previews.123rf.com/images/sevalv/sevalv1706/sevalv170600287/80194193-close-up-of-beautiful-ginger-girl-touching-hair-smiling-showing-tongue-looking-at-camera-white-backg.jpg'},
-            data: '11.11.2020, 20:54:00',
-            likes: 15,
-            comments: 20,
-        },
-
-        {
-            title: 'Маркетинг в наши дни',
-            text: 'Агентская комиссия позиционирует эмпирический комплексный анализ ситуации, не считаясь с затратами. Спонсорство поддерживает бренд. Продукт, как принято считать, стабилизирует целевой трафик. Продуктовый ассортимент концентрирует культурный SWOT-анализ.',
-            tags: ['маркетинг', 'анализ', 'развитие', 'promotion'],
-            author: {displayName: 'Maks', photo: 'https://www.baldingbeards.com/wp-content/uploads/2020/04/ways-to-grow-a-thicker-beard.jpg'},
-            data: '07.11.2020, 15:20:00',
-            likes: 47,
-            comments: 5,
-        },
-
-        {
-            title: 'Жидкофазный катионит — актуальная национальная задача',
-            text: 'Гибридизация, в согласии с традиционными представлениями, различна. Комплекс рения с саленом, в первом приближении, ковалентно выпадает сернистый газ. Диэтиловый эфир представляет собой полимерный белок.',
-            tags: ['химия', 'анализ', 'молекула', 'белок', 'трансформация'],
-            author: {displayName: 'Nick', photo: 'https://i.pinimg.com/originals/ca/f1/fd/caf1fdc4ee811b1a47c0885d797bb31d.jpg'},
-            data: '17.06.2020, 18:53:00',
-            likes: 17,
-            comments: 2,
-        }
-
-    ],
+    allPosts: [],
 
     addPost(title, text, tags, handler) {
 
         this.allPosts.unshift({
+            id: `postID${(+new Date()).toString(16)}`,
             title,
             text,
             tags: tags.split(',').map(item => item.trim()),
             author: {
                 displayName: setUsers.user.displayName,
-                photo: setUsers.user.photo,
+                photo: setUsers.user.photoURL,
             },
             data: new Date().toLocaleString(),
             likes: 0,
             comments: 0,
         })
 
-        //if handler does not exist => without errors:
-        if (handler) {
+        firebase.database().ref('post').set(this.allPosts)
+            .then(() => this.getPosts(handler));
+    },
+
+    getPosts(handler) {
+        firebase.database().ref('post').on('value', snapshot => {
+            this.allPosts = snapshot.val() || [];
+
             handler();
-        }
-
-
-    }
-
+        })
+    },
 };
 
 //open login window after authorzation
@@ -212,7 +213,7 @@ const toggleAuthDom = () => {
         loginElem.style.display = 'none';
         userElem.style.display = '';
         userNameElem.textContent = user.displayName;
-        userAvatarElem.src = user.photo || userAvatarElem.src;
+        userAvatarElem.src = user.photoURL || DEFAULT_PHOTO;
         btnNewPost.classList.add('visible');
     } else {
         loginElem.style.display = '';
@@ -312,7 +313,7 @@ const init = () => {
     
     exitElem.addEventListener('click', (e) => {
         e.preventDefault();
-        setUsers.logOut(toggleAuthDom);
+        setUsers.logOut();
     });
     
     editElem.addEventListener('click', (e) => {
@@ -352,9 +353,11 @@ const init = () => {
         addPostElem.classList.remove('visible');
         addPostElem.reset();
     });
-    
-    showAllPosts();
-    toggleAuthDom();
+
+
+
+    setUsers.initUser(toggleAuthDom);
+    setPosts.getPosts(showAllPosts);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
