@@ -32,12 +32,10 @@ const editUsername = document.querySelector('.edit-username');
 const editPhotoURL = document.querySelector('.edit-photo');
 const userAvatarElem = document.querySelector('.user-avatar');
 const postsWrapper = document.querySelector('.posts');
-
 const btnNewPost = document.querySelector('.button-new-post');
 const addPostElem = document.querySelector('.add-post');
-
+const loginForget = document.querySelector('.login-forget');
 const DEFAULT_PHOTO = userAvatarElem.src;
-
 
 //One big object with methods for work with the listUsers
 const setUsers = {
@@ -83,15 +81,6 @@ const setUsers = {
                         alert(errMessage);
                     }
                 });
-
-        // const user = this.getUser(email);
-
-        // if (user && user.password === password) {
-        //     this.authorizedUser(user); //authorization
-        //     handler(); //change blocks
-        // } else {
-        //     alert('Пользователь с такими данными не найден');
-        // }
     },
 
     logOut() {
@@ -133,17 +122,6 @@ const setUsers = {
                         alert(errMessage);
                     }
                 });
-
-
-
-        // if (!this.getUser(email)) { 
-        //     const user = {email, password, displayName: email.split('@')[0]}
-        //     listUsers.push(user); //add new person
-        //     this.authorizedUser(user); //authorization
-        //     handler(); //change blocks
-        // } else {
-        //     alert('Пользователь уже зарегистрирован');
-        // }
     },
 
     editUser(displayName, photoURL, handler) {
@@ -164,14 +142,23 @@ const setUsers = {
         }
     },
 
-    // getUser(email) {
-    //     return listUsers.find(item => item.email === email)
-    // },
-
-    // authorizedUser(user) {
-    //     this.user = user;
-    // }
+    sendForget(email) {
+        firebase.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    alert('Письмо отправлено')
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+    }
 }; 
+
+loginForget.addEventListener('click', e => {
+    e.preventDefault();
+    setUsers.sendForget(emailInput.value);
+    emailInput.value = '';
+})
+
 
 const setPosts = {
     allPosts: [],
@@ -363,11 +350,3 @@ const init = () => {
 document.addEventListener('DOMContentLoaded', () => {
     init();
 });
-
-
-
-
-
-
-
-
